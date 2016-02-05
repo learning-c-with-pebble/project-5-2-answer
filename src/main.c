@@ -1,3 +1,9 @@
+//----------------------------------------------------------------------------------
+//
+// Project 5.2 from "Programming Pebble in C"
+// 
+// Mathew Reiss with Mike Jipping, February 2016
+
 #include <pebble.h>
 
 Layer *layer;
@@ -7,20 +13,25 @@ GBitmap *old_image, *image;
 uint8_t *bitmap_data;
 int bytes_per_row;
 
+// Set the correct screen height and width (checking for Pebble Time Round)
 int HEIGHT = PBL_IF_RECT_ELSE(168,180);
 int WIDTH = PBL_IF_RECT_ELSE(144,180);
 
+// Set the height and width of the image
 int IMAGE_HEIGHT = 76;
 int IMAGE_WIDTH = 56;
 
+// Get the color of the pixel at (x,y)
 GColor get_pixel_color(int x, int y){
 	return (GColor){ .argb = bitmap_data[y*bytes_per_row + x] };
 }
 
+// Set the color of the pixel at (x,y) to "color"
 void set_pixel_color(int x, int y, GColor color){
 	bitmap_data[y*bytes_per_row + x] = color.argb;
 }
 
+// Go through pixels using a nested loop and replace old_color with new_color
 void replace_colors(int pixel_width, int pixel_height, GColor old_color, GColor new_color){
 	int max_y = pixel_height; //Use 28 for just the hat
 	int max_x = pixel_width;
@@ -35,6 +46,7 @@ void replace_colors(int pixel_width, int pixel_height, GColor old_color, GColor 
 	}
 }
 
+// Draw two images with a line separating them
 void draw(Layer *layer, GContext *ctx){
 	graphics_context_set_compositing_mode(ctx, GCompOpSet);
 	graphics_draw_bitmap_in_rect(ctx, old_image, GRect((WIDTH-IMAGE_WIDTH)/2, 4, IMAGE_WIDTH, IMAGE_HEIGHT));
@@ -43,6 +55,7 @@ void draw(Layer *layer, GContext *ctx){
 	graphics_draw_line(ctx, GPoint(0,HEIGHT/2), GPoint(WIDTH,HEIGHT/2));
 }
 
+//---------------------------------------------------------------------------------------------
 
 void handle_init(){
 	window = window_create();
