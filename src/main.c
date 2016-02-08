@@ -69,12 +69,10 @@ void handle_init(){
 	bitmap_data = gbitmap_get_data(image);
 	bytes_per_row = gbitmap_get_bytes_per_row(image);
 	
-	replace_colors(56, 76, GColorRed, GColorBlue);
-	replace_colors(56, 76, GColorDarkCandyAppleRed, GColorOxfordBlue);
+	replace_colors(IMAGE_WIDTH, IMAGE_HEIGHT, GColorRed, GColorBlue);
+	replace_colors(IMAGE_WIDTH, IMAGE_HEIGHT, GColorDarkCandyAppleRed, GColorOxfordBlue);
 	
 	window_stack_push(window, true);
-	
-	//light_enable(true);
 	
 	app_event_loop();
 }
